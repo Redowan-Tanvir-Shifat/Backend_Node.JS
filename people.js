@@ -14,15 +14,36 @@
 // })();
 
 
-var people = ['sakib', 'tamim', 'mashrafi'];
-var a = 9;
+// var people = ['sakib', 'tamim', 'mashrafi'];
+// var a = 9;
 
-function test() {
-    console.log('test');
+// function test() {
+//     console.log('test');
+// }
+
+// module.exports = {
+//     people,
+//     a,
+//     test
+// }
+
+
+// <-----------------------------------Core Module------------------------------------------>
+// <-----------Events Module----------->
+const EventEmitter = require('events');
+
+class MyEvent extends EventEmitter {
+    startEvent() {
+        console.log('Hi Tanvir');
+
+        // raise event when bell rings
+        setTimeout(() => {
+            this.emit('bellRing', {
+                name: 'Tanvir Shifat',
+                age: 22
+            });
+        }, 2000);
+    }
 }
 
-module.exports = {
-    people,
-    a,
-    test
-}
+module.exports = MyEvent; // export eventLearning function to index.js
