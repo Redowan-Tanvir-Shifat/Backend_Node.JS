@@ -91,7 +91,3 @@ myEvent.on('bellRing', ({ name, age }) => { // register a listener for the event
 });
 
 myEvent.startEvent(); // call startEvent function from people.js
-
-
-
-// <-----------HTTP Module-----------> 
