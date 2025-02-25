@@ -8,3 +8,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     res.send('This is home page with post request.');
 });
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
