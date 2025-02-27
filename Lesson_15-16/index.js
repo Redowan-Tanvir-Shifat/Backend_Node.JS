@@ -20,8 +20,14 @@ app.use(
     })
 );
 
+// Router
+const router = express.Router({
+    caseSensitive: true, // case sensitive routing
+});
+app.use(router); 
 
-app.get('/', (req, res) => {
+
+router.get('/about', (req, res) => {
     res.send('This is home page.');
 });
 
