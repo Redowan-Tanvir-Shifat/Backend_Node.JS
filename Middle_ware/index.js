@@ -8,12 +8,25 @@ app.use(cookieParser());
 
 const adminrouter = express.Router();
 
-const logger = (req, res, next) => {
-    console.log(`${new Date(Date.now()).toLocaleString()} - ${req.method} - ${req.originalUrl} - ${req.protocol} - ${req.ip}`);
-    throw new Error('This is an error');
-};
 
-adminrouter.use(logger);
+const loggerWrapper = (options) => 
+    function (req, res, next) {
+        if(options.log) {
+            console.log(`${new Date(Date.now()).toLocaleString()} - ${req.method} - ${req.originalUrl} - ${req.protocol} - ${req.ip}`);
+            next();
+        }
+        else {
+            throw new Error('Failed to log');
+        }
+    };
+
+// const logger = (req, res, next) => {
+//     console.log(`${new Date(Date.now()).toLocaleString()} - ${req.method} - ${req.originalUrl} - ${req.protocol} - ${req.ip}`);
+//     throw new Error('This is an error');
+// };
+
+adminrouter.use(loggerWrapper({log: false}));
+
 
 adminrouter.get('/dashboard', (req, res) => {
     res.send('Admin Dashboard');
@@ -21,9 +34,11 @@ adminrouter.get('/dashboard', (req, res) => {
 
 app.use('/admin', adminrouter);
 
+
 app.get('/about', (req, res) => {
     res.send('About');
 });
+
 
 const errorMiddleware = (err, req, res, next) => {
     console.log(err.message);
@@ -31,6 +46,7 @@ const errorMiddleware = (err, req, res, next) => {
 };
 
 adminrouter.use(errorMiddleware);
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
